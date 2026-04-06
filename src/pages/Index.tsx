@@ -1,49 +1,78 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const HOUSE_IMG = "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/5226f03f-dfa2-41ff-a569-e74745a1ba10.jpg";
-const PLAN_IMG = "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/c56fc596-896a-4805-9608-689e3d5516ff.jpg";
+const HERO_BG = "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80";
 
 const PROJECTS = [
-  { id: 1, name: "Алтайский кедр", area: 148, floors: 2, price: "4 200 000", tag: "Готово" },
-  { id: 2, name: "Северный фьорд", area: 220, floors: 2, price: "6 800 000", tag: "В работе" },
-  { id: 3, name: "Берёзовая роща", area: 96, floors: 1, price: "2 900 000", tag: "Готово" },
+  {
+    title: 'Проект "Приморье-100"',
+    image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    stats: ["📐 102 кв.м", "🛏 3 спальни"],
+    description: "Идеален для постоянного проживания семьи из 4 человек. Просторная кухня-гостиная.",
+    price: "от 3 500 000 ₽",
+  },
+  {
+    title: 'Проект "Инвест-Модуль"',
+    image: "https://images.unsplash.com/photo-1542314831-c53cd4185af1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    stats: ["📐 45 кв.м", "Терраса 15 кв.м"],
+    description: "Создан специально для баз отдыха и сдачи в аренду. Окупаемость от 2 лет.",
+    price: "от 1 800 000 ₽",
+  },
+  {
+    title: 'Проект "Шале Хасан"',
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    stats: ["📐 150 кв.м", "Второй свет"],
+    description: "Премиальное решение с панорамным остеклением и высокими потолками.",
+    price: "от 5 200 000 ₽",
+  },
 ];
 
-const PROCESS_STEPS = [
-  { num: "01", title: "Заявка", desc: "Оставляете контакты — связываемся в течение 2 часов, уточняем задачу" },
-  { num: "02", title: "Проект", desc: "Разрабатываем 3D-модель домокомплекта с учётом участка и бюджета" },
-  { num: "03", title: "Производство", desc: "Изготавливаем все элементы на заводе с контролем качества" },
-  { num: "04", title: "Сборка", desc: "Монтируем дом на вашем участке под ключ за 30–90 дней" },
+const FEATURES = [
+  {
+    icon: "🏭",
+    title: "Заводское качество",
+    description: "Высокая точность деталей исключает продувание стен и долгую подгонку материалов на строительной площадке.",
+  },
+  {
+    icon: "📝",
+    title: "Фиксируемая смета",
+    description: "Вы получаете один понятный продукт. Мы фиксируем цену на комплект — никаких скрытых платежей и внезапных удорожаний.",
+  },
+  {
+    icon: "📈",
+    title: "Решения для инвесторов",
+    description: "Подберем формат домокомплекта для базы отдыха, глэмпинга или арендного бизнеса для быстрого выхода на окупаемость.",
+  },
 ];
 
-const MATERIALS = [
-  { id: "eco", label: "Клееный брус", multiplier: 1.0 },
-  { id: "prof", label: "Профилированный брус", multiplier: 0.75 },
-  { id: "clt", label: "CLT-панели", multiplier: 1.35 },
-  { id: "srub", label: "Оцилиндрованное бревно", multiplier: 0.85 },
+const STEPS = [
+  { number: "01", title: "Проект и Смета", description: "Выбираем проект, делаем точный расчет до рубля." },
+  { number: "02", title: "Договор", description: "Фиксируем сроки, цены и гарантии юридически." },
+  { number: "03", title: "Производство", description: "Изготавливаем комплект на заводе за 14–30 дней." },
+  { number: "04", title: "Сборка", description: "Доставляем и собираем дом на вашем участке." },
 ];
 
-function useInView(threshold = 0.15) {
+function useInView() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold }
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.1 }
     );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
-  }, [threshold]);
+  }, []);
   return { ref, visible };
 }
 
-function AnimSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const { ref, visible } = useInView();
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${className}`}
+      className={`transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
@@ -51,20 +80,15 @@ function AnimSection({ children, className = "" }: { children: React.ReactNode; 
 }
 
 export default function Index() {
-  const [area, setArea] = useState(120);
-  const [floors, setFloors] = useState(1);
-  const [material, setMaterial] = useState("eco");
-  const [extras, setExtras] = useState({ terrace: false, garage: false, bath: false });
+  const [form, setForm] = useState({ name: "", phone: "", goal: "" });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const BASE_PRICE = 28000;
-  const mat = MATERIALS.find(m => m.id === material)!;
-  let total = area * BASE_PRICE * mat.multiplier * floors * (floors === 2 ? 0.9 : 1);
-  if (extras.terrace) total += 250000;
-  if (extras.garage) total += 380000;
-  if (extras.bath) total += 420000;
-
-  const fmt = (n: number) => Math.round(n).toLocaleString("ru-RU");
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
@@ -72,410 +96,304 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-golos overflow-x-hidden">
+    <div className="min-h-screen bg-[#F4F7F6] text-[#1A3C34] font-golos overflow-x-hidden">
 
-      {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-[#0a0a0a]/90 backdrop-blur-sm border-b border-white/5">
-        <div className="font-oswald text-2xl font-black tracking-widest text-white">
-          АРХИ<span className="text-[#ff4d00]">БРУС</span>
+      {/* ── NAV ── */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#1A3C34] shadow-xl" : "bg-transparent"}`}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
+          <div className="font-cormorant text-2xl font-bold tracking-wide text-white">
+            АРХИ<span className="text-[#D4AF37]">БРУС</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8">
+            {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["form","Консультация"]].map(([id, label]) => (
+              <button key={id} onClick={() => scrollTo(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
+            ))}
+            <a href="tel:+74230000000" className="text-white font-medium text-sm ml-4 hover:text-[#D4AF37] transition-colors">+7 (423) 000-00-00</a>
+            <button onClick={() => scrollTo("form")} className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-5 py-2.5 transition-all hover:scale-105">
+              Перезвоните мне
+            </button>
+          </div>
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white">
+            <Icon name={menuOpen ? "X" : "Menu"} size={24} />
+          </button>
         </div>
-        <div className="hidden md:flex gap-8 text-sm font-medium tracking-wider text-white/60">
-          {[["projects","ПРОЕКТЫ"],["about","О НАС"],["process","ПРОЦЕСС"],["calculator","КАЛЬКУЛЯТОР"],["contacts","КОНТАКТЫ"]].map(([id,label]) => (
-            <button key={id} onClick={() => scrollTo(id)} className="hover:text-[#ff4d00] transition-colors">{label}</button>
-          ))}
-        </div>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white">
-          <Icon name={menuOpen ? "X" : "Menu"} size={24} />
-        </button>
       </nav>
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col items-center justify-center gap-8">
-          {[["projects","ПРОЕКТЫ"],["about","О НАС"],["process","ПРОЦЕСС"],["calculator","КАЛЬКУЛЯТОР"],["contacts","КОНТАКТЫ"]].map(([id,label]) => (
-            <button key={id} onClick={() => scrollTo(id)} className="font-oswald text-4xl font-bold tracking-widest hover:text-[#ff4d00] transition-colors">{label}</button>
+        <div className="fixed inset-0 z-40 bg-[#1A3C34] flex flex-col items-center justify-center gap-10">
+          {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["form","Консультация"]].map(([id, label]) => (
+            <button key={id} onClick={() => scrollTo(id)} className="font-cormorant text-4xl font-bold text-white hover:text-[#D4AF37] transition-colors">{label}</button>
           ))}
+          <a href="tel:+74230000000" className="text-white/70 mt-4">+7 (423) 000-00-00</a>
         </div>
       )}
 
-      {/* HERO */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-20 pt-24 px-6 md:px-16 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${HOUSE_IMG})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/80 to-transparent" />
-
-        <div className="absolute top-0 left-0 w-1 h-full bg-[#ff4d00]" />
-
-        <div className="relative z-10 max-w-5xl">
-          <div className="inline-block bg-[#ff4d00] text-white text-xs font-bold tracking-[0.3em] px-4 py-2 mb-6 uppercase">
-            Домокомплекты из дерева
-          </div>
-          <h1 className="font-oswald text-6xl md:text-[9vw] font-black leading-none tracking-tight uppercase mb-6">
-            Дом,<br />
-            <span className="[text-stroke:2px_white] [-webkit-text-stroke:2px_white] text-transparent">который</span><br />
-            живёт
-          </h1>
-          <p className="text-white/60 text-lg md:text-xl max-w-lg mb-10 font-light leading-relaxed">
-            Проектируем и производим домокомплекты из клееного бруса. Сборка за 30–90 дней.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button
-              onClick={() => scrollTo("calculator")}
-              className="bg-[#ff4d00] hover:bg-[#e64400] text-white font-oswald font-bold text-lg tracking-widest px-10 py-4 uppercase transition-all hover:scale-105"
-            >
-              Рассчитать стоимость
-            </button>
-            <button
-              onClick={() => scrollTo("projects")}
-              className="border border-white/30 hover:border-white text-white font-oswald font-bold text-lg tracking-widest px-10 py-4 uppercase transition-all hover:bg-white/5"
-            >
-              Смотреть проекты
-            </button>
-          </div>
+      {/* ── HERO ── */}
+      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={HERO_BG} alt="Дом" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-[#1A3C34]/75" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A3C34]/30 via-transparent to-[#1A3C34]/60" />
         </div>
 
-        <div className="relative z-10 mt-16 grid grid-cols-3 gap-0 border-t border-white/10 pt-8 max-w-xl">
-          {[["150+","проектов"],["30","дней монтаж"],["10 лет","гарантия"]].map(([val, label]) => (
-            <div key={label} className="pr-8">
-              <div className="font-oswald text-3xl font-black text-[#ff4d00]">{val}</div>
-              <div className="text-white/40 text-xs uppercase tracking-wider mt-1">{label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+        {/* Decorative gold line */}
+        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-transparent via-[#D4AF37] to-transparent" />
 
-      {/* PROJECTS */}
-      <section id="projects" className="py-24 px-6 md:px-16">
-        <AnimSection>
-          <div className="flex items-end justify-between mb-16">
-            <div>
-              <div className="text-[#ff4d00] text-xs font-bold tracking-[0.4em] uppercase mb-3">— Наши работы</div>
-              <h2 className="font-oswald text-5xl md:text-7xl font-black uppercase leading-none">
-                Проекты
-              </h2>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 pt-32 pb-24">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 border border-[#D4AF37]/40 text-[#D4AF37] text-xs tracking-[0.3em] uppercase px-4 py-2 mb-8">
+              <span className="w-4 h-px bg-[#D4AF37]" />
+              Владивосток и Дальний Восток
             </div>
-            <div className="hidden md:block w-24 h-px bg-[#ff4d00]" />
-          </div>
-        </AnimSection>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {PROJECTS.map((p, i) => (
-            <AnimSection key={p.id}>
-              <div
-                className="group relative overflow-hidden bg-[#141414] border border-white/5 hover:border-[#ff4d00]/50 transition-all duration-500 cursor-pointer"
-                style={{ transitionDelay: `${i * 100}ms` }}
+            <h1 className="font-cormorant text-5xl md:text-7xl font-bold leading-[1.1] text-white mb-6">
+              Дом вашей мечты —<br />
+              <em className="text-[#D4AF37] not-italic">за понятные деньги,</em><br />
+              в понятные сроки
+            </h1>
+            <p className="text-white/65 text-lg leading-relaxed max-w-xl mb-10">
+              Производим домокомплекты и помогаем пройти весь путь: от выбора проекта до сборки на вашем участке. Без строительного хаоса и растущих смет.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button
+                onClick={() => scrollTo("form")}
+                className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-base px-8 py-4 transition-all hover:scale-105"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={HOUSE_IMG}
-                    alt={p.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-100"
-                  />
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className={`text-xs font-bold tracking-wider px-3 py-1 ${p.tag === "Готово" ? "bg-[#ff4d00] text-white" : "bg-white/10 border border-white/20 text-white"}`}>
-                    {p.tag}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-oswald text-2xl font-bold uppercase mb-2">{p.name}</h3>
-                  <div className="flex gap-4 text-white/40 text-sm mb-4">
-                    <span>{p.area} м²</span>
-                    <span>{p.floors} эт.</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-oswald text-xl font-black text-[#ff4d00]">от {p.price} ₽</span>
-                    <Icon name="ArrowRight" size={20} className="text-white/20 group-hover:text-[#ff4d00] transition-colors" />
-                  </div>
-                </div>
-              </div>
-            </AnimSection>
-          ))}
+                Рассчитать стоимость
+              </button>
+              <button
+                onClick={() => scrollTo("catalog")}
+                className="border border-white/40 hover:border-[#D4AF37] text-white hover:text-[#D4AF37] font-medium text-base px-8 py-4 transition-all"
+              >
+                Смотреть проекты
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs tracking-widest uppercase">
+          <span>Листать</span>
+          <Icon name="ChevronDown" size={16} className="animate-bounce" />
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" className="py-24 px-6 md:px-16 bg-[#ff4d00] relative overflow-hidden">
-        <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-white/5" />
-        <div className="absolute -left-10 -bottom-10 w-64 h-64 rounded-full bg-black/10" />
-
-        <AnimSection className="relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="text-white/60 text-xs font-bold tracking-[0.4em] uppercase mb-3">— О компании</div>
-              <h2 className="font-oswald text-5xl md:text-7xl font-black uppercase leading-none text-white mb-8">
-                О нас
+      {/* ── FEATURES ── */}
+      <section id="features" className="py-28 bg-[#1A3C34]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <Reveal>
+            <div className="text-center mb-16">
+              <div className="inline-block w-8 h-px bg-[#D4AF37] mb-4" />
+              <h2 className="font-cormorant text-5xl md:text-6xl font-bold text-white mb-4">
+                Почему выбирают <em className="text-[#D4AF37] not-italic">АРХИБРУС</em>
               </h2>
-              <p className="text-white/80 text-lg leading-relaxed mb-6">
-                АРХИБРУС — производитель домокомплектов из массива дерева с 2014 года. Мы работаем по всей России: от Калининграда до Владивостока.
-              </p>
-              <p className="text-white/70 leading-relaxed">
-                Собственное производство в Сибири, авторские проекты и жёсткий контроль на каждом этапе — от выбора леса до сдачи объекта.
-              </p>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[["2014", "год основания"],["500+","довольных семей"],["3", "завода"],["100%","своё производство"]].map(([val, label]) => (
-                <div key={label} className="bg-black/10 p-6">
-                  <div className="font-oswald text-4xl font-black text-white mb-1">{val}</div>
-                  <div className="text-white/60 text-sm uppercase tracking-wider">{label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimSection>
-      </section>
+          </Reveal>
 
-      {/* PROCESS */}
-      <section id="process" className="py-24 px-6 md:px-16">
-        <AnimSection>
-          <div className="mb-16">
-            <div className="text-[#ff4d00] text-xs font-bold tracking-[0.4em] uppercase mb-3">— Как мы работаем</div>
-            <h2 className="font-oswald text-5xl md:text-7xl font-black uppercase leading-none">
-              Процесс
-            </h2>
-          </div>
-        </AnimSection>
-
-        <div className="relative">
-          <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-white/10" />
-          <div className="grid md:grid-cols-4 gap-8">
-            {PROCESS_STEPS.map((s, i) => (
-              <AnimSection key={s.num}>
-                <div className="relative" style={{ transitionDelay: `${i * 150}ms` }}>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 bg-[#ff4d00] flex items-center justify-center flex-shrink-0">
-                      <span className="font-oswald text-xl font-black text-white">{s.num}</span>
-                    </div>
-                    <div className="h-px flex-1 bg-white/10 md:hidden" />
-                  </div>
-                  <h3 className="font-oswald text-2xl font-bold uppercase mb-3">{s.title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{s.desc}</p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {FEATURES.map((f, i) => (
+              <Reveal key={f.title} delay={i * 120}>
+                <div className="group border border-white/10 hover:border-[#D4AF37]/50 p-8 transition-all duration-500 hover:bg-[#2C5E50]/30">
+                  <div className="text-4xl mb-6">{f.icon}</div>
+                  <h3 className="font-cormorant text-2xl font-bold text-white mb-3">{f.title}</h3>
+                  <p className="text-white/55 text-sm leading-relaxed">{f.description}</p>
+                  <div className="mt-6 w-8 h-px bg-[#D4AF37]/30 group-hover:bg-[#D4AF37] group-hover:w-16 transition-all duration-500" />
                 </div>
-              </AnimSection>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CALCULATOR */}
-      <section id="calculator" className="py-24 px-6 md:px-16 bg-[#111]">
-        <AnimSection>
-          <div className="mb-16">
-            <div className="text-[#ff4d00] text-xs font-bold tracking-[0.4em] uppercase mb-3">— Интерактивный расчёт</div>
-            <h2 className="font-oswald text-5xl md:text-7xl font-black uppercase leading-none">
-              Калькулятор
-            </h2>
+      {/* ── CATALOG ── */}
+      <section id="catalog" className="py-28 bg-[#F4F7F6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <Reveal>
+            <div className="mb-16">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-8 h-px bg-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase font-medium">Каталог</span>
+              </div>
+              <h2 className="font-cormorant text-5xl md:text-6xl font-bold text-[#1A3C34]">
+                Популярные проекты
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {PROJECTS.map((p, i) => (
+              <Reveal key={p.title} delay={i * 100}>
+                <div className="group bg-white overflow-hidden hover:shadow-2xl transition-all duration-500">
+                  <div className="aspect-[4/3] overflow-hidden relative">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-[#1A3C34]/20 group-hover:bg-[#1A3C34]/10 transition-colors" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-cormorant text-2xl font-bold text-[#1A3C34] mb-3">{p.title}</h3>
+                    <div className="flex gap-3 mb-4">
+                      {p.stats.map(s => (
+                        <span key={s} className="text-xs bg-[#F4F7F6] text-[#2C5E50] px-3 py-1 font-medium">{s}</span>
+                      ))}
+                    </div>
+                    <p className="text-[#1A3C34]/60 text-sm leading-relaxed mb-5">{p.description}</p>
+                    <div className="flex items-center justify-between border-t border-[#F4F7F6] pt-4">
+                      <span className="font-cormorant text-2xl font-bold text-[#1A3C34]">{p.price}</span>
+                      <button
+                        onClick={() => scrollTo("form")}
+                        className="text-[#D4AF37] text-sm font-medium hover:text-[#1A3C34] transition-colors flex items-center gap-1"
+                      >
+                        Узнать детали <Icon name="ArrowRight" size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
-        </AnimSection>
-
-        <div className="grid md:grid-cols-2 gap-12 items-start max-w-5xl">
-          <AnimSection>
-            <div className="space-y-8">
-              {/* Area */}
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-white/60 text-sm uppercase tracking-wider font-medium">Площадь дома</label>
-                  <span className="font-oswald text-3xl font-black text-[#ff4d00]">{area} м²</span>
-                </div>
-                <input
-                  type="range" min={50} max={500} value={area}
-                  onChange={e => setArea(+e.target.value)}
-                  className="w-full accent-[#ff4d00] cursor-pointer"
-                />
-                <div className="flex justify-between text-white/20 text-xs mt-1">
-                  <span>50 м²</span><span>500 м²</span>
-                </div>
-              </div>
-
-              {/* Floors */}
-              <div>
-                <label className="text-white/60 text-sm uppercase tracking-wider font-medium block mb-3">Этажность</label>
-                <div className="flex gap-3">
-                  {[1, 2].map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setFloors(f)}
-                      className={`flex-1 py-4 font-oswald font-bold text-xl uppercase tracking-wider border transition-all ${floors === f ? "bg-[#ff4d00] border-[#ff4d00] text-white" : "border-white/10 text-white/40 hover:border-white/30"}`}
-                    >
-                      {f} этаж{f === 2 ? "а" : ""}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Material */}
-              <div>
-                <label className="text-white/60 text-sm uppercase tracking-wider font-medium block mb-3">Материал</label>
-                <div className="grid grid-cols-2 gap-3">
-                  {MATERIALS.map(m => (
-                    <button
-                      key={m.id}
-                      onClick={() => setMaterial(m.id)}
-                      className={`py-3 px-4 text-sm font-medium border text-left transition-all ${material === m.id ? "bg-[#ff4d00] border-[#ff4d00] text-white" : "border-white/10 text-white/40 hover:border-white/30"}`}
-                    >
-                      {m.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Extras */}
-              <div>
-                <label className="text-white/60 text-sm uppercase tracking-wider font-medium block mb-3">Дополнения</label>
-                <div className="space-y-2">
-                  {([["terrace","Терраса","+ 250 000 ₽"],["garage","Гараж","+ 380 000 ₽"],["bath","Баня","+ 420 000 ₽"]] as const).map(([key, label, price]) => (
-                    <button
-                      key={key}
-                      onClick={() => setExtras(e => ({ ...e, [key]: !e[key] }))}
-                      className={`w-full flex items-center justify-between py-3 px-4 border transition-all ${extras[key] ? "bg-[#ff4d00]/10 border-[#ff4d00]" : "border-white/10 hover:border-white/20"}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 ${extras[key] ? "bg-[#ff4d00] border-[#ff4d00]" : "border-white/20"}`}>
-                          {extras[key] && <Icon name="Check" size={12} />}
-                        </div>
-                        <span className="text-sm font-medium text-white">{label}</span>
-                      </div>
-                      <span className="text-[#ff4d00] text-sm font-bold">{price}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </AnimSection>
-
-          {/* Result */}
-          <AnimSection>
-            <div className="sticky top-28">
-              <div className="bg-[#0a0a0a] border border-white/10 p-8">
-                <div className="text-white/40 text-xs uppercase tracking-wider mb-2">Предварительная стоимость</div>
-                <div className="font-oswald text-5xl md:text-6xl font-black text-[#ff4d00] mb-1">
-                  {fmt(total)} ₽
-                </div>
-                <div className="text-white/30 text-sm mb-8">
-                  ≈ {fmt(total / area)} ₽ / м²
-                </div>
-
-                <div className="space-y-3 mb-8 border-t border-white/5 pt-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/40">Площадь</span>
-                    <span className="text-white">{area} м²</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/40">Этажей</span>
-                    <span className="text-white">{floors}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/40">Материал</span>
-                    <span className="text-white">{mat.label}</span>
-                  </div>
-                  {extras.terrace && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/40">Терраса</span>
-                      <span className="text-[#ff4d00]">+250 000 ₽</span>
-                    </div>
-                  )}
-                  {extras.garage && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/40">Гараж</span>
-                      <span className="text-[#ff4d00]">+380 000 ₽</span>
-                    </div>
-                  )}
-                  {extras.bath && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/40">Баня</span>
-                      <span className="text-[#ff4d00]">+420 000 ₽</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="text-white/20 text-xs mb-6 leading-relaxed">
-                  * Расчёт предварительный. Точная стоимость определяется после проектирования.
-                </div>
-
-                <button
-                  onClick={() => scrollTo("contacts")}
-                  className="w-full bg-[#ff4d00] hover:bg-[#e64400] text-white font-oswald font-bold text-lg tracking-widest py-5 uppercase transition-all hover:scale-[1.02]"
-                >
-                  Получить точный расчёт
-                </button>
-              </div>
-
-              <div className="mt-4 overflow-hidden opacity-40 hover:opacity-60 transition-opacity">
-                <img src={PLAN_IMG} alt="Планировка" className="w-full h-32 object-cover" />
-              </div>
-            </div>
-          </AnimSection>
         </div>
       </section>
 
-      {/* CONTACTS */}
-      <section id="contacts" className="py-24 px-6 md:px-16">
-        <AnimSection>
-          <div className="mb-16">
-            <div className="text-[#ff4d00] text-xs font-bold tracking-[0.4em] uppercase mb-3">— Напишите нам</div>
-            <h2 className="font-oswald text-5xl md:text-7xl font-black uppercase leading-none">
-              Контакты
-            </h2>
-          </div>
-        </AnimSection>
-
-        <div className="grid md:grid-cols-2 gap-16">
-          <AnimSection>
-            <div className="space-y-4">
-              <input
-                type="text" placeholder="Ваше имя"
-                className="w-full bg-transparent border border-white/10 focus:border-[#ff4d00] text-white placeholder-white/20 px-6 py-4 outline-none transition-colors"
-              />
-              <input
-                type="tel" placeholder="Телефон"
-                className="w-full bg-transparent border border-white/10 focus:border-[#ff4d00] text-white placeholder-white/20 px-6 py-4 outline-none transition-colors"
-              />
-              <textarea
-                rows={4} placeholder="Расскажите о вашем проекте..."
-                className="w-full bg-transparent border border-white/10 focus:border-[#ff4d00] text-white placeholder-white/20 px-6 py-4 outline-none transition-colors resize-none"
-              />
-              <button className="w-full bg-[#ff4d00] hover:bg-[#e64400] text-white font-oswald font-bold text-lg tracking-widest py-5 uppercase transition-all hover:scale-[1.01]">
-                Отправить заявку
-              </button>
-              <p className="text-white/20 text-xs text-center">Отвечаем в течение 2 часов в рабочее время</p>
+      {/* ── STEPS ── */}
+      <section id="steps" className="py-28 bg-[#2C5E50]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <Reveal>
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase">Процесс</span>
+                <div className="w-8 h-px bg-[#D4AF37]" />
+              </div>
+              <h2 className="font-cormorant text-5xl md:text-6xl font-bold text-white">
+                Как мы работаем
+              </h2>
             </div>
-          </AnimSection>
+          </Reveal>
 
-          <AnimSection>
-            <div className="space-y-8">
-              {[
-                { icon: "Phone", label: "Телефон", val: "+7 (800) 555-35-35" },
-                { icon: "Mail", label: "Email", val: "info@archibrus.ru" },
-                { icon: "MapPin", label: "Производство", val: "Новосибирск, Сибирский тракт, 15" },
-                { icon: "Clock", label: "Режим работы", val: "Пн–Пт 9:00–18:00" },
-              ].map(({ icon, label, val }) => (
-                <div key={label} className="flex gap-5 items-start group">
-                  <div className="w-12 h-12 bg-[#ff4d00]/10 border border-[#ff4d00]/20 flex items-center justify-center flex-shrink-0 group-hover:bg-[#ff4d00] transition-colors">
-                    <Icon name={icon} fallback="Phone" size={20} className="text-[#ff4d00] group-hover:text-white transition-colors" />
+          <div className="grid md:grid-cols-4 gap-0">
+            {STEPS.map((s, i) => (
+              <Reveal key={s.number} delay={i * 100}>
+                <div className="relative flex flex-col items-start md:items-center text-left md:text-center px-0 md:px-6 py-8 md:py-0">
+                  {/* Connector line */}
+                  {i < STEPS.length - 1 && (
+                    <div className="hidden md:block absolute top-8 left-1/2 right-0 h-px bg-[#D4AF37]/20" style={{ width: "calc(100% - 2rem)" }} />
+                  )}
+                  <div className="relative z-10 w-16 h-16 bg-[#1A3C34] border border-[#D4AF37]/40 flex items-center justify-center mb-5">
+                    <span className="font-cormorant text-xl font-bold text-[#D4AF37]">{s.number}</span>
+                  </div>
+                  <h3 className="font-cormorant text-xl font-bold text-white mb-2">{s.title}</h3>
+                  <p className="text-white/50 text-sm leading-relaxed">{s.description}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── LEAD FORM ── */}
+      <section id="form" className="py-28 bg-[#F4F7F6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+
+            {/* Info */}
+            <Reveal>
+              <div>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-8 h-px bg-[#D4AF37]" />
+                  <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase font-medium">Консультация</span>
+                </div>
+                <h2 className="font-cormorant text-5xl font-bold text-[#1A3C34] leading-tight mb-6">
+                  Начните<br />с консультации
+                </h2>
+                <p className="text-[#1A3C34]/65 leading-relaxed mb-10 text-base">
+                  Оставьте заявку, и мы поможем выбрать домокомплект под ваш участок, бюджет и задачу. Вы получите понятный расчет и рекомендации по комплектации.
+                </p>
+                <div className="space-y-4">
+                  {[
+                    { icon: "Check", text: "Без навязывания услуг" },
+                    { icon: "CreditCard", text: "Работаем с ипотекой и маткапиталом" },
+                    { icon: "MapPin", text: "Экскурсии на готовые объекты" },
+                  ].map(({ icon, text }) => (
+                    <div key={text} className="flex items-center gap-4">
+                      <div className="w-8 h-8 bg-[#1A3C34] flex items-center justify-center flex-shrink-0">
+                        <Icon name={icon} size={14} className="text-[#D4AF37]" />
+                      </div>
+                      <span className="text-[#1A3C34]/80 text-sm font-medium">{text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Form */}
+            <Reveal delay={150}>
+              <div className="bg-[#1A3C34] p-8 md:p-10">
+                <div className="space-y-5">
+                  <div>
+                    <label className="text-white/50 text-xs uppercase tracking-wider block mb-2">Ваше имя</label>
+                    <input
+                      type="text"
+                      placeholder="Иван Иванов"
+                      value={form.name}
+                      onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                      className="w-full bg-white/5 border border-white/10 focus:border-[#D4AF37] text-white placeholder-white/20 px-4 py-3.5 outline-none transition-colors text-sm"
+                    />
                   </div>
                   <div>
-                    <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{label}</div>
-                    <div className="text-white font-medium">{val}</div>
+                    <label className="text-white/50 text-xs uppercase tracking-wider block mb-2">Телефон</label>
+                    <input
+                      type="tel"
+                      placeholder="+7 (___) ___-__-__"
+                      value={form.phone}
+                      onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                      className="w-full bg-white/5 border border-white/10 focus:border-[#D4AF37] text-white placeholder-white/20 px-4 py-3.5 outline-none transition-colors text-sm"
+                    />
                   </div>
+                  <div>
+                    <label className="text-white/50 text-xs uppercase tracking-wider block mb-2">Цель строительства</label>
+                    <select
+                      value={form.goal}
+                      onChange={e => setForm(f => ({ ...f, goal: e.target.value }))}
+                      className="w-full bg-[#1A3C34] border border-white/10 focus:border-[#D4AF37] text-white px-4 py-3.5 outline-none transition-colors text-sm appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>Выберите цель...</option>
+                      <option>Дом для себя (ИЖС)</option>
+                      <option>Дача / Гостевой дом</option>
+                      <option>База отдыха / Инвестиции</option>
+                    </select>
+                  </div>
+
+                  <button className="w-full bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-base py-4 transition-all hover:scale-[1.02] mt-2">
+                    Получить расчет за 1 день
+                  </button>
+                  <p className="text-white/25 text-xs text-center leading-relaxed">
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </AnimSection>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/5 py-8 px-6 md:px-16 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="font-oswald text-xl font-black tracking-widest">
-          АРХИ<span className="text-[#ff4d00]">БРУС</span>
-        </div>
-        <div className="text-white/20 text-xs">© 2024 АРХИБРУС. Все права защищены.</div>
-        <div className="flex gap-6 text-white/30 text-xs uppercase tracking-wider">
-          <button onClick={() => scrollTo("projects")} className="hover:text-[#ff4d00] transition-colors">Проекты</button>
-          <button onClick={() => scrollTo("contacts")} className="hover:text-[#ff4d00] transition-colors">Контакты</button>
+      {/* ── FOOTER ── */}
+      <footer className="bg-[#1A3C34] border-t border-white/5 py-10 px-6 md:px-16">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <div className="font-cormorant text-2xl font-bold text-white mb-1">
+              АРХИ<span className="text-[#D4AF37]">БРУС</span>
+            </div>
+            <p className="text-white/30 text-xs">Производство домокомплектов во Владивостоке и Приморском крае.</p>
+          </div>
+          <div className="flex gap-8 text-white/30 text-xs uppercase tracking-wider">
+            <button onClick={() => scrollTo("catalog")} className="hover:text-[#D4AF37] transition-colors">Проекты</button>
+            <button onClick={() => scrollTo("features")} className="hover:text-[#D4AF37] transition-colors">Преимущества</button>
+            <button onClick={() => scrollTo("form")} className="hover:text-[#D4AF37] transition-colors">Контакты</button>
+          </div>
+          <p className="text-white/20 text-xs">© 2026 Все права защищены.</p>
         </div>
       </footer>
     </div>
