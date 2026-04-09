@@ -81,7 +81,8 @@ const REVIEWS = [
 
 const PORTFOLIO_TABS = ["ИЖС (Для жизни)", "Базы отдыха (B2B)", "Дачи и Бани"];
 
-const PORTFOLIO = [
+const PORTFOLIO: { tab: string; label: string; title: string; image: string; description: string; time: string; location: string }[] = [
+  // ИЖС
   {
     tab: "ИЖС (Для жизни)",
     label: "Частный дом (ИЖС)",
@@ -92,6 +93,43 @@ const PORTFOLIO = [
     location: "Артем",
   },
   {
+    tab: "ИЖС (Для жизни)",
+    label: "Частный дом (ИЖС)",
+    title: "Одноэтажный дом для молодой семьи",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Компактный проект 85 кв.м. с двумя спальнями и просторной кухней-гостиной. Тёплый пол, отделка под ключ. Идеально для начала семейной жизни.",
+    time: "14 дней",
+    location: "Владивосток",
+  },
+  {
+    tab: "ИЖС (Для жизни)",
+    label: "Частный дом (ИЖС)",
+    title: "Двухэтажный дом с мансардой",
+    image: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Просторный дом 160 кв.м. с мансардным этажом, 4 спальнями и двумя санузлами. Остекление второго света, вид на сопки.",
+    time: "25 дней",
+    location: "Уссурийск",
+  },
+  {
+    tab: "ИЖС (Для жизни)",
+    label: "Частный дом (ИЖС)",
+    title: "Дом с террасой на берегу залива",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Проект 110 кв.м. с панорамной террасой 20 кв.м. Усиленное утепление для морского климата, большие окна с видом на залив.",
+    time: "20 дней",
+    location: "Находка",
+  },
+  {
+    tab: "ИЖС (Для жизни)",
+    label: "Частный дом (ИЖС)",
+    title: "Дом под маткапитал и ипотеку",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Доступный проект 95 кв.м. реализован с использованием материнского капитала и семейной ипотеки. Три спальни, полная отделка.",
+    time: "16 дней",
+    location: "Спасск-Дальний",
+  },
+  // Базы отдыха
+  {
     tab: "Базы отдыха (B2B)",
     label: "База отдыха (B2B)",
     title: "Глэмпинг в Хасанском районе",
@@ -101,6 +139,43 @@ const PORTFOLIO = [
     location: "Андреевка",
   },
   {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Эко-лагерь на берегу реки",
+    image: "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Три гостевых домика по 35 кв.м. плюс общий банный корпус. Проект рассчитан на поток до 20 туристов одновременно.",
+    time: "22 дня",
+    location: "Кировский район",
+  },
+  {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Гостиничный комплекс у моря",
+    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Восемь стандартных номеров по 28 кв.м. с террасами. Быстрый монтаж позволил запустить объект к летнему сезону в сжатые сроки.",
+    time: "45 дней",
+    location: "Славянка",
+  },
+  {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Туристический лагерь для корпоративов",
+    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Четыре домика 40 кв.м. с общей зоной барбекю и беседками. Корпоративная аренда, заполняемость от 80% в первый сезон.",
+    time: "28 дней",
+    location: "Михайловский район",
+  },
+  {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Семейный кемпинг с домиками",
+    image: "https://images.unsplash.com/photo-1533760881669-80db4d7b341e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Шесть домов 50 кв.м. для семейного отдыха с детьми. Детская площадка, огороженная территория, Wi-Fi покрытие всего участка.",
+    time: "35 дней",
+    location: "Хасан",
+  },
+  // Дачи и Бани
+  {
     tab: "Дачи и Бани",
     label: "Дача и Баня",
     title: "Гостевой дом с парной",
@@ -108,6 +183,42 @@ const PORTFOLIO = [
     description: "Уютный проект 60 кв.м. с просторной террасой для загородного отдыха на выходных. Полноценная парилка и зона отдыха.",
     time: "14 дней",
     location: "Надеждинск",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Летняя дача с верандой",
+    image: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Лёгкий дачный проект 50 кв.м. с открытой верандой 15 кв.м. Летняя кухня, погреб, место для барбекю. Сдан к первым выходным сезона.",
+    time: "10 дней",
+    location: "Партизанск",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Баня с комнатой отдыха",
+    image: "https://images.unsplash.com/photo-1531088009183-5ff5b7c95f91?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Отдельно стоящая баня 36 кв.м.: парилка, моечная, просторная комната отдыха с камином. Лиственница внутри, теплообменник на трубе.",
+    time: "8 дней",
+    location: "Артем",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Дача для круглогодичного отдыха",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Утеплённый проект 70 кв.м. с двумя спальнями и камином. Рассчитан на использование зимой — двойное утепление, тёплый пол в санузле.",
+    time: "16 дней",
+    location: "Уссурийский район",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Комплекс: дача + баня",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Два объекта на одном участке: дача 65 кв.м. и баня 30 кв.м. с переходным крытым коридором. Всё собрано за один приезд бригады.",
+    time: "18 дней",
+    location: "Дальнереченск",
   },
 ];
 
@@ -147,7 +258,14 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 
 function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
   const [activeTab, setActiveTab] = useState(PORTFOLIO_TABS[0]);
-  const item = PORTFOLIO.find(p => p.tab === activeTab)!;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const items = PORTFOLIO.filter(p => p.tab === activeTab);
+  const item = items[activeIndex];
+
+  const switchTab = (tab: string) => { setActiveTab(tab); setActiveIndex(0); };
+  const prev = () => setActiveIndex(i => (i - 1 + items.length) % items.length);
+  const next = () => setActiveIndex(i => (i + 1) % items.length);
 
   return (
     <div>
@@ -156,7 +274,7 @@ function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
           {PORTFOLIO_TABS.map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => switchTab(tab)}
               className={`text-sm font-medium px-5 py-2.5 border transition-all duration-300 ${
                 activeTab === tab
                   ? "bg-[#1A3C34] text-white border-[#1A3C34]"
@@ -169,9 +287,14 @@ function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
         </div>
       </Reveal>
 
-      <div key={activeTab} className="grid md:grid-cols-2 gap-0 bg-white shadow-lg overflow-hidden" style={{ animation: "fadeIn 0.4s ease" }}>
-        <div className="aspect-[4/3] md:aspect-auto overflow-hidden">
+      <div key={`${activeTab}-${activeIndex}`} className="grid md:grid-cols-2 gap-0 bg-white shadow-lg overflow-hidden" style={{ animation: "fadeIn 0.35s ease" }}>
+        <div className="aspect-[4/3] md:aspect-auto overflow-hidden relative">
           <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-[#1A3C34]/10" />
+          {/* counter badge */}
+          <div className="absolute bottom-4 left-4 bg-[#1A3C34]/80 text-white text-xs px-3 py-1 font-medium tracking-wider">
+            {activeIndex + 1} / {items.length}
+          </div>
         </div>
         <div className="p-10 md:p-12 flex flex-col justify-between">
           <div>
@@ -191,16 +314,36 @@ function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
               </div>
             </div>
           </div>
-          <div className="mt-10">
+          <div className="mt-10 flex items-center justify-between gap-4 flex-wrap">
             <button
               onClick={() => scrollTo("form")}
-              className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-8 py-4 transition-all hover:scale-105 inline-block"
+              className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-8 py-4 transition-all hover:scale-105"
             >
               Хочу такой же проект
             </button>
+            <div className="flex gap-2">
+              <button onClick={prev} className="w-10 h-10 border border-[#1A3C34]/20 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition-all text-[#1A3C34]/50">
+                <Icon name="ChevronLeft" size={18} />
+              </button>
+              <button onClick={next} className="w-10 h-10 border border-[#1A3C34]/20 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition-all text-[#1A3C34]/50">
+                <Icon name="ChevronRight" size={18} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* dots */}
+      <div className="flex justify-center gap-2 mt-5">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`transition-all duration-300 ${i === activeIndex ? "w-8 h-2 bg-[#D4AF37]" : "w-2 h-2 bg-[#D4AF37]/30 hover:bg-[#D4AF37]/60"}`}
+          />
+        ))}
+      </div>
+
       <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }`}</style>
     </div>
   );
