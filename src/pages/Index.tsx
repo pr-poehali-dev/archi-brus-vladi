@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 const HERO_BG = "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80";
+const LEADS_URL = "https://functions.poehali.dev/473def77-fbda-41fa-bf71-6f8e7e0cc5a0";
 
 const PROJECTS = [
   {
@@ -81,8 +82,38 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 
 export default function Index() {
   const [form, setForm] = useState({ name: "", phone: "", goal: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!form.name.trim() || !form.phone.trim()) {
+      setError("Пожалуйста, укажите имя и телефон");
+      return;
+    }
+    setError("");
+    setSubmitting(true);
+    try {
+      const res = await fetch(LEADS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setSubmitted(true);
+        setForm({ name: "", phone: "", goal: "" });
+      } else {
+        setError(data.error || "Ошибка отправки");
+      }
+    } catch {
+      setError("Не удалось отправить. Попробуйте позже.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -366,9 +397,32 @@ export default function Index() {
                     </select>
                   </div>
 
-                  <button className="w-full bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-base py-4 transition-all hover:scale-[1.02] mt-2">
-                    Получить расчет за 1 день
-                  </button>
+                  {error && (
+                    <p className="text-red-400 text-xs text-center">{error}</p>
+                  )}
+
+                  {submitted ? (
+                    <div className="text-center py-6">
+                      <div className="w-12 h-12 bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center mx-auto mb-4">
+                        <Icon name="Check" size={20} className="text-[#D4AF37]" />
+                      </div>
+                      <p className="font-cormorant text-2xl font-bold text-white mb-2">Заявка принята!</p>
+                      <p className="text-white/50 text-sm">Мы свяжемся с вами в течение рабочего дня.</p>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleSubmit}
+                      disabled={submitting}
+                      className="w-full bg-[#D4AF37] hover:bg-[#c49e2e] disabled:opacity-60 text-[#1A3C34] font-semibold text-base py-4 transition-all hover:scale-[1.02] mt-2 flex items-center justify-center gap-2"
+                    >
+                      {submitting ? (
+                        <>
+                          <Icon name="Loader2" size={16} className="animate-spin" />
+                          Отправляем...
+                        </>
+                      ) : "Получить расчет за 1 день"}
+                    </button>
+                  )}
                   <p className="text-white/25 text-xs text-center leading-relaxed">
                     Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.
                   </p>
