@@ -87,7 +87,7 @@ const PORTFOLIO: { tab: string; label: string; title: string; image: string; des
     tab: "ИЖС (Для жизни)",
     label: "Частный дом (ИЖС)",
     title: "Дом в пригороде Владивостока",
-    image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/7028ad06-ef7a-4a81-ae53-a6adc8b5aa55.png",
     description: "Проект 120 кв.м. для постоянного проживания семьи из 4 человек. Высокие потолки, панорамное остекление, отделка «под ключ».",
     time: "18 дней",
     location: "Артем",
