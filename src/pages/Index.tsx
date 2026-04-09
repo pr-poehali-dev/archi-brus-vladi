@@ -113,6 +113,76 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
+function ReviewsCarousel() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = REVIEWS.length;
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setActive(i => (i + 1) % total), 5000);
+    return () => clearInterval(t);
+  }, [paused, total]);
+
+  const prev = () => { setPaused(true); setActive(i => (i - 1 + total) % total); };
+  const next = () => { setPaused(true); setActive(i => (i + 1) % total); };
+
+  const r = REVIEWS[active];
+
+  return (
+    <div className="relative" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <div className="relative bg-white overflow-hidden min-h-[280px] flex flex-col justify-between p-10 md:p-14 shadow-lg">
+        {/* progress bar */}
+        {!paused && (
+          <div key={active} className="absolute top-0 left-0 h-[3px] bg-[#D4AF37]" style={{ animation: "progress 5s linear forwards" }} />
+        )}
+
+        <div className="flex flex-col gap-6">
+          <span className="text-[#D4AF37] text-xs tracking-[0.25em] uppercase font-medium border border-[#D4AF37]/30 px-3 py-1 self-start">
+            {r.category}
+          </span>
+          <div className="relative">
+            <span className="font-cormorant text-8xl text-[#D4AF37]/15 leading-none absolute -top-4 -left-2 select-none">"</span>
+            <p className="text-[#1A3C34]/75 text-base md:text-lg leading-relaxed pt-6 relative z-10 max-w-3xl">{r.text}</p>
+          </div>
+          <div className="flex items-center gap-3 pt-4 border-t border-[#F4F7F6]">
+            <div className="w-10 h-10 bg-[#1A3C34] flex items-center justify-center flex-shrink-0">
+              <Icon name="User" size={16} className="text-[#D4AF37]" />
+            </div>
+            <div>
+              <p className="font-cormorant text-lg font-bold text-[#1A3C34]">{r.author}</p>
+              <p className="text-[#1A3C34]/40 text-xs">{r.city}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-between mt-6">
+        <div className="flex gap-2">
+          {REVIEWS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setPaused(true); setActive(i); }}
+              className={`transition-all duration-300 ${i === active ? "w-8 h-2 bg-[#D4AF37]" : "w-2 h-2 bg-[#D4AF37]/30 hover:bg-[#D4AF37]/60"}`}
+            />
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <button onClick={prev} className="w-10 h-10 border border-[#1A3C34]/20 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition-all text-[#1A3C34]/50">
+            <Icon name="ChevronLeft" size={18} />
+          </button>
+          <button onClick={next} className="w-10 h-10 border border-[#1A3C34]/20 hover:border-[#D4AF37] hover:text-[#D4AF37] flex items-center justify-center transition-all text-[#1A3C34]/50">
+            <Icon name="ChevronRight" size={18} />
+          </button>
+        </div>
+      </div>
+
+      <style>{`@keyframes progress { from { width: 0% } to { width: 100% } }`}</style>
+    </div>
+  );
+}
+
 export default function Index() {
   const [form, setForm] = useState({ name: "", phone: "", goal: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -467,7 +537,7 @@ export default function Index() {
       </section>
 
       {/* ── REVIEWS ── */}
-      <section id="reviews" className="py-28 bg-[#F4F7F6]">
+      <section id="reviews" className="py-28 bg-[#F4F7F6] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-16">
           <Reveal>
             <div className="text-center mb-16">
@@ -482,32 +552,7 @@ export default function Index() {
             </div>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {REVIEWS.map((r, i) => (
-              <Reveal key={r.author} delay={i * 100}>
-                <div className="bg-white p-8 flex flex-col gap-5 hover:shadow-xl transition-all duration-500 group border border-transparent hover:border-[#D4AF37]/20 h-full">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase font-medium border border-[#D4AF37]/30 px-3 py-1">
-                      {r.category}
-                    </span>
-                  </div>
-                  <div className="relative flex-1">
-                    <span className="font-cormorant text-6xl text-[#D4AF37]/20 leading-none absolute -top-2 -left-1 select-none">"</span>
-                    <p className="text-[#1A3C34]/70 text-sm leading-relaxed pt-4 relative z-10">{r.text}</p>
-                  </div>
-                  <div className="flex items-center gap-3 pt-2 border-t border-[#F4F7F6]">
-                    <div className="w-8 h-8 bg-[#1A3C34] flex items-center justify-center flex-shrink-0">
-                      <Icon name="User" size={14} className="text-[#D4AF37]" />
-                    </div>
-                    <div>
-                      <p className="font-cormorant text-base font-bold text-[#1A3C34]">{r.author}</p>
-                      <p className="text-[#1A3C34]/40 text-xs">{r.city}</p>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <ReviewsCarousel />
         </div>
       </section>
 
