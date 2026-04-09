@@ -407,7 +407,7 @@ export default function Index() {
                         <Icon name="Check" size={20} className="text-[#D4AF37]" />
                       </div>
                       <p className="font-cormorant text-2xl font-bold text-white mb-2">Заявка принята!</p>
-                      <p className="text-white/50 text-sm">Мы свяжемся с вами в течение рабочего дня.</p>
+                      <p className="text-white/50 text-sm">Мы свяжемся с вами в течение часа.</p>
                     </div>
                   ) : (
                     <button
