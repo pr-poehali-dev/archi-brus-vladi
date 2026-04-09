@@ -79,6 +79,38 @@ const REVIEWS = [
   },
 ];
 
+const PORTFOLIO_TABS = ["ИЖС (Для жизни)", "Базы отдыха (B2B)", "Дачи и Бани"];
+
+const PORTFOLIO = [
+  {
+    tab: "ИЖС (Для жизни)",
+    label: "Частный дом (ИЖС)",
+    title: "Дом в пригороде Владивостока",
+    image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Проект 120 кв.м. для постоянного проживания семьи из 4 человек. Высокие потолки, панорамное остекление, отделка «под ключ».",
+    time: "18 дней",
+    location: "Артем",
+  },
+  {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Глэмпинг в Хасанском районе",
+    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Комплекс из 5 гостевых модулей по 45 кв.м. Адаптирован под круглогодичную сдачу в аренду туристам. Возведен до начала сезона.",
+    time: "30 дней",
+    location: "Андреевка",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Гостевой дом с парной",
+    image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    description: "Уютный проект 60 кв.м. с просторной террасой для загородного отдыха на выходных. Полноценная парилка и зона отдыха.",
+    time: "14 дней",
+    location: "Надеждинск",
+  },
+];
+
 const STEPS = [
   { number: "01", title: "Проект и Смета", description: "Выбираем проект, делаем точный расчет до рубля." },
   { number: "02", title: "Договор", description: "Фиксируем сроки, цены и гарантии юридически." },
@@ -109,6 +141,67 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
+    </div>
+  );
+}
+
+function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
+  const [activeTab, setActiveTab] = useState(PORTFOLIO_TABS[0]);
+  const item = PORTFOLIO.find(p => p.tab === activeTab)!;
+
+  return (
+    <div>
+      <Reveal>
+        <div className="flex justify-center gap-3 mt-10 mb-10 flex-wrap">
+          {PORTFOLIO_TABS.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`text-sm font-medium px-5 py-2.5 border transition-all duration-300 ${
+                activeTab === tab
+                  ? "bg-[#1A3C34] text-white border-[#1A3C34]"
+                  : "bg-transparent text-[#1A3C34] border-[#1A3C34]/30 hover:border-[#D4AF37] hover:text-[#D4AF37]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </Reveal>
+
+      <div key={activeTab} className="grid md:grid-cols-2 gap-0 bg-white shadow-lg overflow-hidden" style={{ animation: "fadeIn 0.4s ease" }}>
+        <div className="aspect-[4/3] md:aspect-auto overflow-hidden">
+          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+        </div>
+        <div className="p-10 md:p-12 flex flex-col justify-between">
+          <div>
+            <span className="text-[#D4AF37] text-xs tracking-[0.25em] uppercase font-bold border border-[#D4AF37]/30 px-3 py-1 inline-block mb-6">
+              {item.label}
+            </span>
+            <h3 className="font-cormorant text-3xl md:text-4xl font-bold text-[#1A3C34] mb-4">{item.title}</h3>
+            <p className="text-[#1A3C34]/65 text-base leading-relaxed mb-8">{item.description}</p>
+            <div className="flex gap-6">
+              <div className="flex items-center gap-2">
+                <Icon name="Clock" size={16} className="text-[#D4AF37]" />
+                <span className="text-[#1A3C34] font-semibold text-sm">Сборка: {item.time}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="MapPin" size={16} className="text-[#D4AF37]" />
+                <span className="text-[#1A3C34] font-semibold text-sm">{item.location}</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10">
+            <button
+              onClick={() => scrollTo("form")}
+              className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-8 py-4 transition-all hover:scale-105 inline-block"
+            >
+              Хочу такой же проект
+            </button>
+          </div>
+        </div>
+      </div>
+      <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }`}</style>
     </div>
   );
 }
@@ -239,7 +332,7 @@ export default function Index() {
             АРХИ<span className="text-[#D4AF37]">БРУС</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
+            {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["portfolio","Портфолио"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
             ))}
             <a href="tel:+79146940560" className="text-white font-medium text-sm ml-4 hover:text-[#D4AF37] transition-colors">+7 (914) 694-05-60</a>
@@ -256,7 +349,7 @@ export default function Index() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-[#1A3C34] flex flex-col items-center justify-center gap-10">
-          {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
+          {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["portfolio","Портфолио"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)} className="font-cormorant text-4xl font-bold text-white hover:text-[#D4AF37] transition-colors">{label}</button>
           ))}
           <a href="tel:+79146940560" className="text-white/70 mt-4">+7 (914) 694-05-60</a>
@@ -424,6 +517,27 @@ export default function Index() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── PORTFOLIO ── */}
+      <section id="portfolio" className="py-28 bg-[#F4F7F6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <Reveal>
+            <div className="text-center mb-4">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase">Портфолио</span>
+                <div className="w-8 h-px bg-[#D4AF37]" />
+              </div>
+              <h2 className="font-cormorant text-5xl md:text-6xl font-bold text-[#1A3C34]">
+                Реализованные проекты
+              </h2>
+              <p className="text-[#1A3C34]/50 mt-4 text-base">Наше портфолио по направлениям строительства</p>
+            </div>
+          </Reveal>
+
+          <PortfolioTabs scrollTo={scrollTo} />
         </div>
       </section>
 
