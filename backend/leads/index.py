@@ -3,7 +3,13 @@
 import json
 import os
 import urllib.parse
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import pg8000.native
+
+MAIL_FROM = "Ekaterina170287@mail.ru"
+MAIL_TO = "Ekaterina170287@mail.ru"
 
 
 CORS = {
@@ -53,10 +59,44 @@ def handler(event: dict, context) -> dict:
         row = conn.run(sql)
         conn.close()
 
+        lead_id = row[0][0]
+
+        mail_pass = os.environ.get("MAIL_PASSWORD", "")
+        if mail_pass:
+            try:
+                msg = MIMEMultipart("alternative")
+                msg["Subject"] = f"Новая заявка #{lead_id} — АРХИБРУС"
+                msg["From"] = MAIL_FROM
+                msg["To"] = MAIL_TO
+                html = f"""
+                <div style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto">
+                  <div style="background:#1A3C34;padding:24px 32px">
+                    <span style="color:#fff;font-size:22px;font-weight:bold">АРХИ<span style="color:#D4AF37">БРУС</span></span>
+                  </div>
+                  <div style="padding:32px;background:#f9f9f9;border:1px solid #e5e5e5">
+                    <h2 style="color:#1A3C34;margin:0 0 24px">Новая заявка с сайта</h2>
+                    <table style="width:100%;border-collapse:collapse">
+                      <tr><td style="color:#888;padding:8px 0;width:120px">Имя</td><td style="color:#1A3C34;font-weight:bold;padding:8px 0">{name}</td></tr>
+                      <tr><td style="color:#888;padding:8px 0">Телефон</td><td style="color:#1A3C34;font-weight:bold;padding:8px 0">{phone}</td></tr>
+                      <tr><td style="color:#888;padding:8px 0">Цель</td><td style="color:#1A3C34;padding:8px 0">{goal or "—"}</td></tr>
+                    </table>
+                    <div style="margin-top:24px">
+                      <a href="tel:{phone}" style="background:#D4AF37;color:#1A3C34;padding:12px 24px;text-decoration:none;font-weight:bold;display:inline-block">Позвонить клиенту</a>
+                    </div>
+                  </div>
+                </div>
+                """
+                msg.attach(MIMEText(html, "html", "utf-8"))
+                with smtplib.SMTP_SSL("smtp.mail.ru", 465) as server:
+                    server.login(MAIL_FROM, mail_pass)
+                    server.sendmail(MAIL_FROM, MAIL_TO, msg.as_string())
+            except Exception:
+                pass
+
         return {
             "statusCode": 200,
             "headers": CORS,
-            "body": json.dumps({"ok": True, "id": row[0][0]}, ensure_ascii=False),
+            "body": json.dumps({"ok": True, "id": lead_id}, ensure_ascii=False),
         }
 
     if method == "GET":
