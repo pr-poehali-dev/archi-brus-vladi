@@ -46,6 +46,39 @@ const FEATURES = [
   },
 ];
 
+const REVIEWS = [
+  {
+    category: "Семья с детьми",
+    text: "Давно хотели свой дом, но боялись, что стройка затянется и выйдет дороже, чем планировали. С АРХИБРУС все оказалось намного понятнее: помогли выбрать проект, все объяснили простым языком, всегда были на связи. Сейчас уже живем в доме и очень довольны.",
+    author: "Анна и Сергей",
+    city: "Артем",
+  },
+  {
+    category: "Для дачи",
+    text: "Искали вариант для дачи, чтобы без лишней суеты и бесконечных переделок. Понравилось, что сразу дали понятный расчет и объяснили, из чего складывается цена. Дом получился теплый, аккуратный и именно такой, как мы хотели.",
+    author: "Ирина",
+    city: "Владивосток",
+  },
+  {
+    category: "Для постоянного проживания",
+    text: "Для нас было важно, чтобы дом был надежный и чтобы не пришлось постоянно что-то доделывать. Выбрали АРХИБРУС, потому что все выглядело честно и спокойно, без пустых обещаний. Работой остались довольны, видно, что люди знают свое дело.",
+    author: "Алексей",
+    city: "Уссурийск",
+  },
+  {
+    category: "Для бизнеса / базы отдыха",
+    text: "Заказывали домокомплект под гостевой дом для базы отдыха. Нужен был вариант, который можно быстро запустить и не растянуть стройку на неопределенный срок. Все прошло организованно, результат нас устроил, сейчас уже думаем о следующем объекте.",
+    author: "Максим",
+    city: "Приморский край",
+  },
+  {
+    category: "Первый опыт строительства",
+    text: "Мы вообще раньше не сталкивались со строительством и переживали, что ничего не поймем. Но нам все объяснили поэтапно, подсказали по проекту и помогли определиться с комплектацией. Было ощущение, что с нами работают по-человечески, а это очень важно.",
+    author: "Екатерина",
+    city: "Находка",
+  },
+];
+
 const STEPS = [
   { number: "01", title: "Проект и Смета", description: "Выбираем проект, делаем точный расчет до рубля." },
   { number: "02", title: "Договор", description: "Фиксируем сроки, цены и гарантии юридически." },
@@ -136,7 +169,7 @@ export default function Index() {
             АРХИ<span className="text-[#D4AF37]">БРУС</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["form","Консультация"]].map(([id, label]) => (
+            {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
             ))}
             <a href="tel:+79146940560" className="text-white font-medium text-sm ml-4 hover:text-[#D4AF37] transition-colors">+7 (914) 694-05-60</a>
@@ -153,7 +186,7 @@ export default function Index() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-[#1A3C34] flex flex-col items-center justify-center gap-10">
-          {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["form","Консультация"]].map(([id, label]) => (
+          {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)} className="font-cormorant text-4xl font-bold text-white hover:text-[#D4AF37] transition-colors">{label}</button>
           ))}
           <a href="tel:+79146940560" className="text-white/70 mt-4">+7 (914) 694-05-60</a>
@@ -429,6 +462,51 @@ export default function Index() {
                 </div>
               </div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REVIEWS ── */}
+      <section id="reviews" className="py-28 bg-[#F4F7F6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-16">
+          <Reveal>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase">Отзывы</span>
+                <div className="w-8 h-px bg-[#D4AF37]" />
+              </div>
+              <h2 className="font-cormorant text-5xl md:text-6xl font-bold text-[#1A3C34]">
+                Что говорят наши клиенты
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {REVIEWS.map((r, i) => (
+              <Reveal key={r.author} delay={i * 100}>
+                <div className="bg-white p-8 flex flex-col gap-5 hover:shadow-xl transition-all duration-500 group border border-transparent hover:border-[#D4AF37]/20 h-full">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase font-medium border border-[#D4AF37]/30 px-3 py-1">
+                      {r.category}
+                    </span>
+                  </div>
+                  <div className="relative flex-1">
+                    <span className="font-cormorant text-6xl text-[#D4AF37]/20 leading-none absolute -top-2 -left-1 select-none">"</span>
+                    <p className="text-[#1A3C34]/70 text-sm leading-relaxed pt-4 relative z-10">{r.text}</p>
+                  </div>
+                  <div className="flex items-center gap-3 pt-2 border-t border-[#F4F7F6]">
+                    <div className="w-8 h-8 bg-[#1A3C34] flex items-center justify-center flex-shrink-0">
+                      <Icon name="User" size={14} className="text-[#D4AF37]" />
+                    </div>
+                    <div>
+                      <p className="font-cormorant text-base font-bold text-[#1A3C34]">{r.author}</p>
+                      <p className="text-[#1A3C34]/40 text-xs">{r.city}</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
