@@ -8,8 +8,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import pg8000.native
 
-MAIL_FROM = "Ekaterina170287@mail.ru"
-MAIL_TO = "Ekaterina170287@mail.ru"
+MAIL_FROM = os.environ.get("MAIL_EMAIL", "")
+MAIL_TO = os.environ.get("MAIL_EMAIL", "")
 
 
 CORS = {
@@ -90,8 +90,8 @@ def handler(event: dict, context) -> dict:
                 with smtplib.SMTP_SSL("smtp.mail.ru", 465) as server:
                     server.login(MAIL_FROM, mail_pass)
                     server.sendmail(MAIL_FROM, MAIL_TO, msg.as_string())
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"Mail error: {e}")
 
         return {
             "statusCode": 200,
