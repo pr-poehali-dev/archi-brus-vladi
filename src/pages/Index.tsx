@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_BG = "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80";
+const HERO_BG = "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/abf65af5-492f-4692-8488-71436c566e87.jpg";
 const LEADS_URL = "https://functions.poehali.dev/473def77-fbda-41fa-bf71-6f8e7e0cc5a0";
 
 const PROJECTS = [
