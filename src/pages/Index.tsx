@@ -52,30 +52,35 @@ const REVIEWS = [
     text: "Давно хотели свой дом, но боялись, что стройка затянется и выйдет дороже, чем планировали. С АРХИБРУС все оказалось намного понятнее: помогли выбрать проект, все объяснили простым языком, всегда были на связи. Сейчас уже живем в доме и очень довольны.",
     author: "Анна и Сергей",
     city: "Артем",
+    avatar: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/f828db5b-8942-46f8-9061-c843866eb938.jpg",
   },
   {
     category: "Для дачи",
     text: "Искали вариант для дачи, чтобы без лишней суеты и бесконечных переделок. Понравилось, что сразу дали понятный расчет и объяснили, из чего складывается цена. Дом получился теплый, аккуратный и именно такой, как мы хотели.",
     author: "Ирина",
     city: "Владивосток",
+    avatar: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/dbce0a11-478c-4140-98d0-e8538bf72e18.jpg",
   },
   {
     category: "Для постоянного проживания",
     text: "Для нас было важно, чтобы дом был надежный и чтобы не пришлось постоянно что-то доделывать. Выбрали АРХИБРУС, потому что все выглядело честно и спокойно, без пустых обещаний. Работой остались довольны, видно, что люди знают свое дело.",
     author: "Алексей",
     city: "Уссурийск",
+    avatar: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/1f42d40e-db0a-4140-b480-2c945909b32f.jpg",
   },
   {
     category: "Для бизнеса / базы отдыха",
     text: "Заказывали домокомплект под гостевой дом для базы отдыха. Нужен был вариант, который можно быстро запустить и не растянуть стройку на неопределенный срок. Все прошло организованно, результат нас устроил, сейчас уже думаем о следующем объекте.",
     author: "Максим",
     city: "Приморский край",
+    avatar: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/c88090aa-aa50-454a-8619-1af060b05e8f.jpg",
   },
   {
     category: "Первый опыт строительства",
     text: "Мы вообще раньше не сталкивались со строительством и переживали, что ничего не поймем. Но нам все объяснили поэтапно, подсказали по проекту и помогли определиться с комплектацией. Было ощущение, что с нами работают по-человечески, а это очень важно.",
     author: "Екатерина",
     city: "Находка",
+    avatar: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/files/4f05016f-e81d-4c2f-84fb-c6980ce07fa8.jpg",
   },
 ];
 
@@ -382,8 +387,14 @@ function ReviewsCarousel() {
             <p className="text-[#1A3C34]/75 text-base md:text-lg leading-relaxed pt-6 relative z-10 max-w-3xl">{r.text}</p>
           </div>
           <div className="flex items-center gap-3 pt-4 border-t border-[#F4F7F6]">
-            <div className="w-10 h-10 bg-[#1A3C34] flex items-center justify-center flex-shrink-0">
-              <Icon name="User" size={16} className="text-[#D4AF37]" />
+            <div className="w-10 h-10 flex-shrink-0 overflow-hidden rounded-full">
+              {r.avatar ? (
+                <img src={r.avatar} alt={r.author} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-[#1A3C34] flex items-center justify-center">
+                  <Icon name="User" size={16} className="text-[#D4AF37]" />
+                </div>
+              )}
             </div>
             <div>
               <p className="font-cormorant text-lg font-bold text-[#1A3C34]">{r.author}</p>
