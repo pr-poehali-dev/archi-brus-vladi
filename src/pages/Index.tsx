@@ -795,7 +795,11 @@ export default function Index() {
                     </button>
                   )}
                   <p className="text-white/25 text-xs text-center leading-relaxed">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.
+                    Нажимая кнопку, вы соглашаетесь с{" "}
+                    <a href="/privacy" target="_blank" className="underline hover:text-white/50 transition-colors">
+                      согласием на обработку персональных данных
+                    </a>
+                    .
                   </p>
                 </div>
               </div>
