@@ -489,7 +489,7 @@ export default function Index() {
             {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["portfolio","Портфолио"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
             ))}
-            <a href="tel:+79146940560" className="text-white font-medium text-sm ml-4 hover:text-[#D4AF37] transition-colors">+7 (914) 694-05-60</a>
+            <a href="tel:+79242467120" className="text-white font-medium text-sm ml-4 hover:text-[#D4AF37] transition-colors">+7 (924) 246-71-20</a>
             <button onClick={() => scrollTo("form")} className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-5 py-2.5 transition-all hover:scale-105">
               Перезвоните мне
             </button>
@@ -506,7 +506,7 @@ export default function Index() {
           {[["catalog","Проекты"],["features","Преимущества"],["steps","Как работаем"],["portfolio","Портфолио"],["reviews","Отзывы"],["form","Консультация"]].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)} className="font-cormorant text-4xl font-bold text-white hover:text-[#D4AF37] transition-colors">{label}</button>
           ))}
-          <a href="tel:+79146940560" className="text-white/70 mt-4">+7 (914) 694-05-60</a>
+          <a href="tel:+79242467120" className="text-white/70 mt-4">+7 (924) 246-71-20</a>
         </div>
       )}
 
