@@ -716,7 +716,6 @@ export default function Index() {
                 <div className="space-y-4">
                   {[
                     { icon: "Check", text: "Без навязывания услуг" },
-                    { icon: "CreditCard", text: "Работаем с ипотекой и маткапиталом" },
                     { icon: "MapPin", text: "Экскурсии на готовые объекты" },
                   ].map(({ icon, text }) => (
                     <div key={text} className="flex items-center gap-4">
