@@ -165,6 +165,24 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     time: "14 дней",
     location: "Приморский край",
   },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Баня Sauna & Spa в лесу",
+    image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/fdb935f5-8cbb-417f-8a98-2d84474d39ab.jpg",
+    description: "Баня-спа 60 кв.м. с панорамным остеклением, открытой террасой и купелью. Лиственница, плоская кровля, камин в зоне отдыха. Готова под аренду.",
+    time: "12 дней",
+    location: "Приморский край",
+  },
+  {
+    tab: "Дачи и Бани",
+    label: "Дача и Баня",
+    title: "Зимняя баня с джакузи",
+    image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/3a5b597c-39f4-45d7-a6b0-fb56db66ccb6.jpg",
+    description: "Двухэтажная баня 110 кв.м. с панорамным остеклением и джакузи на открытой площадке. Круглогодичное использование, встроенная подсветка территории.",
+    time: "20 дней",
+    location: "Приморский край",
+  },
 ];
 
 export const STEPS = [
