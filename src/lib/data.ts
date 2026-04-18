@@ -130,15 +130,6 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     location: "Находка",
   },
   {
-    tab: "ИЖС (Для жизни)",
-    label: "Частный дом (ИЖС)",
-    title: "Дом под маткапитал и ипотеку",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    description: "Доступный проект 95 кв.м. реализован с использованием материнского капитала и семейной ипотеки. Три спальни, полная отделка.",
-    time: "16 дней",
-    location: "Спасск-Дальний",
-  },
-  {
     tab: "Базы отдыха (B2B)",
     label: "База отдыха (B2B)",
     title: "Глэмпинг в Хасанском районе",
