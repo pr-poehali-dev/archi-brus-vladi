@@ -78,29 +78,37 @@ export default function Navbar({ scrollTo }: NavbarProps) {
       {popup && (
         <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:justify-end p-4 md:p-8 pointer-events-none">
           <div
-            className="pointer-events-auto bg-[#1A3C34] border border-[#D4AF37]/50 shadow-2xl p-6 md:p-8 max-w-sm w-full relative"
+            className="pointer-events-auto bg-[#1A3C34] border border-[#D4AF37]/50 shadow-2xl max-w-sm w-full relative overflow-hidden"
             style={{ animation: "slideUp 0.4s ease" }}
           >
             <button
               onClick={() => setPopup(false)}
-              className="absolute top-3 right-3 text-white/40 hover:text-white transition-colors"
+              className="absolute top-3 right-3 z-10 text-white/60 hover:text-white transition-colors"
             >
               <Icon name="X" size={16} />
             </button>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center flex-shrink-0">
-                <Icon name="Phone" size={18} className="text-[#D4AF37]" />
-              </div>
-              <p className="text-white font-medium text-sm leading-snug">
-                Позвони и запишись<br />на консультацию
-              </p>
+            <img
+              src="https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/cb8091d2-9776-4160-9733-7212af80c6ea.png"
+              alt="АрхиБрус"
+              className="w-full block"
+            />
+            <div className="p-4 flex gap-3">
+              <a
+                href="tel:+79242467120"
+                className="flex-1 bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-bold text-center py-3 text-base tracking-wide transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+              >
+                <Icon name="Phone" size={16} />
+                +7 (924) 246-71-20
+              </a>
+              <a
+                href="https://архибрус.рф"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 font-bold text-center py-3 text-base tracking-wide transition-all flex items-center justify-center"
+              >
+                Перейти на сайт
+              </a>
             </div>
-            <a
-              href="tel:+79242467120"
-              className="block w-full bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-bold text-center py-3.5 text-lg tracking-wide transition-all hover:scale-[1.02]"
-            >
-              +7 (924) 246-71-20
-            </a>
           </div>
           <style>{`@keyframes slideUp { from { opacity: 0; transform: translateY(20px) } to { opacity: 1; transform: translateY(0) } }`}</style>
         </div>
