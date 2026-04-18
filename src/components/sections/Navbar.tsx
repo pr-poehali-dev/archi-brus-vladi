@@ -76,7 +76,7 @@ export default function Navbar({ scrollTo }: NavbarProps) {
       )}
 
       {popup && (
-        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:justify-end p-4 md:p-8 pointer-events-none">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 pointer-events-none">
           <div
             className="pointer-events-auto bg-[#1A3C34] border border-[#D4AF37]/50 shadow-2xl max-w-sm w-full relative overflow-hidden"
             style={{ animation: "slideUp 0.4s ease" }}
@@ -87,11 +87,14 @@ export default function Navbar({ scrollTo }: NavbarProps) {
             >
               <Icon name="X" size={16} />
             </button>
-            <img
-              src="https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/cb8091d2-9776-4160-9733-7212af80c6ea.png"
-              alt="АрхиБрус"
-              className="w-full block"
-            />
+            <div className="overflow-hidden" style={{ height: "300px" }}>
+              <img
+                src="https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/cb8091d2-9776-4160-9733-7212af80c6ea.png"
+                alt="АрхиБрус"
+                className="w-full block object-cover object-top"
+                style={{ height: "380px" }}
+              />
+            </div>
             <div className="p-4 flex gap-3">
               <a
                 href="tel:+79242467120"
