@@ -39,8 +39,15 @@ export default function Navbar({ scrollTo }: NavbarProps) {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#1A3C34] shadow-xl" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <div className="font-cormorant text-2xl font-bold tracking-wide text-white">
-            АРХИ<span className="text-[#D4AF37]">БРУС</span>
+          <div className="flex items-center gap-3">
+            <img
+              src="https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/0d49c746-629d-4bb5-aa99-f3073299f370.png"
+              alt="АрхиБрус"
+              className="h-10 w-auto"
+            />
+            <div className="font-cormorant text-2xl font-bold tracking-wide text-white">
+              АРХИ<span className="text-[#D4AF37]">БРУС</span>
+            </div>
           </div>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map(([id, label]) => (
