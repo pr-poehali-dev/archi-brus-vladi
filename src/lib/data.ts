@@ -139,6 +139,15 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     location: "Приморский край",
   },
   {
+    tab: "Базы отдыха (B2B)",
+    label: "База отдыха (B2B)",
+    title: "Лесной курорт с гостевыми домиками",
+    image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/9de82356-8fb0-4400-bf0c-8dc0595b77dd.png",
+    description: "Четыре гостевых дома по 55 кв.м. среди хвойного леса. Панорамное остекление, каменные подпорные стенки, деревянные террасы с мебелью для отдыха.",
+    time: "28 дней",
+    location: "Приморский край",
+  },
+  {
     tab: "Дачи и Бани",
     label: "Дача и Баня",
     title: "Летняя дача с верандой",
