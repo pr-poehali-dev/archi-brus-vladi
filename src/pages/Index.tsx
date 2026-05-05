@@ -5,6 +5,7 @@ import { PROJECTS, FEATURES, STEPS, PORTFOLIO, PORTFOLIO_TABS, REVIEWS } from "@
 import Navbar from "@/components/sections/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import LeadForm from "@/components/sections/LeadForm";
+import Calculator from "@/components/sections/Calculator";
 import Footer from "@/components/sections/Footer";
 
 function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
@@ -313,6 +314,8 @@ export default function Index() {
           <PortfolioTabs scrollTo={scrollTo} />
         </div>
       </section>
+
+      <Calculator scrollTo={scrollTo} />
 
       <LeadForm />
 

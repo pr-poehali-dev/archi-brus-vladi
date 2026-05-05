@@ -29,6 +29,7 @@ export default function Navbar({ scrollTo }: NavbarProps) {
   const NAV_LINKS = [
     ["catalog", "Проекты"],
     ["features", "Преимущества"],
+    ["calculator", "Калькулятор"],
     ["steps", "Как работаем"],
     ["portfolio", "Портфолио"],
     ["reviews", "Отзывы"],
