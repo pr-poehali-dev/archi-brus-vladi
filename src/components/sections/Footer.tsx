@@ -7,8 +7,8 @@ export default function Footer({ scrollTo }: FooterProps) {
     <footer className="bg-[#1A3C34] border-t border-white/5 py-10 px-6 md:px-16">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <div className="font-cormorant text-2xl font-bold text-white mb-1">
-            АРХИ<span className="text-[#D4AF37]">БРУС</span>
+          <div className="font-cormorant text-2xl font-bold mb-1">
+            <span style={{ color: "#00e5cc", textShadow: "0 0 6px #00e5cc, 0 0 16px #00e5cc, 0 0 50px rgba(0,229,204,.5)" }}>АРХИБРУС</span>
           </div>
           <p className="text-white/30 text-xs">Производство домокомплектов во Владивостоке и Приморском крае.</p>
         </div>
