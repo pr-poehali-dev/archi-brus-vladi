@@ -6,6 +6,7 @@ import Navbar from "@/components/sections/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import LeadForm from "@/components/sections/LeadForm";
 import Calculator from "@/components/sections/Calculator";
+import FAQ from "@/components/sections/FAQ";
 import Footer from "@/components/sections/Footer";
 
 function PortfolioTabs({ scrollTo }: { scrollTo: (id: string) => void }) {
@@ -316,6 +317,8 @@ export default function Index() {
       </section>
 
       <Calculator scrollTo={scrollTo} />
+
+      <FAQ scrollTo={scrollTo} />
 
       <LeadForm />
 

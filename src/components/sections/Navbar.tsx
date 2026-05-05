@@ -30,6 +30,7 @@ export default function Navbar({ scrollTo }: NavbarProps) {
     ["catalog", "Проекты"],
     ["features", "Преимущества"],
     ["calculator", "Калькулятор"],
+    ["faq", "Вопросы"],
     ["steps", "Как работаем"],
     ["portfolio", "Портфолио"],
     ["reviews", "Отзывы"],
