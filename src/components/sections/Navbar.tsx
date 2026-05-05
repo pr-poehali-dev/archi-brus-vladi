@@ -38,35 +38,36 @@ export default function Navbar({ scrollTo }: NavbarProps) {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#1A3C34] shadow-xl" : "bg-transparent"}`}>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col">
+          <div className="flex justify-center py-3 border-b border-white/10">
             <img
               src="https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/0d49c746-629d-4bb5-aa99-f3073299f370.png"
               alt="АрхиБрус"
-              className="h-10 w-auto"
+              className="h-14 w-auto"
             />
-            <div className="font-cormorant text-2xl font-bold tracking-wide text-white">
-              АРХИ<span className="text-[#D4AF37]">БРУС</span>
-            </div>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map(([id, label]) => (
-              <button key={id} onClick={() => handleNav(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
-            ))}
-            <a
-              href="tel:+79242467120"
-              className="flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/50 hover:bg-[#D4AF37]/25 text-[#D4AF37] font-bold text-sm ml-2 px-4 py-2 transition-all hover:scale-105"
-            >
-              <Icon name="Phone" size={14} className="text-[#D4AF37]" />
-              +7 (924) 246-71-20
-            </a>
-            <button onClick={() => handleNav("form")} className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-5 py-2.5 transition-all hover:scale-105">
-              Перезвоните мне
+          <div className="max-w-7xl mx-auto w-full px-6 md:px-12 py-3 flex items-center justify-between">
+            <div className="hidden md:flex items-center gap-8 mx-auto">
+              {NAV_LINKS.map(([id, label]) => (
+                <button key={id} onClick={() => handleNav(id)} className="text-white/70 hover:text-[#D4AF37] text-sm tracking-wider transition-colors uppercase">{label}</button>
+              ))}
+            </div>
+            <div className="hidden md:flex items-center gap-3 ml-8">
+              <a
+                href="tel:+79242467120"
+                className="flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/50 hover:bg-[#D4AF37]/25 text-[#D4AF37] font-bold text-sm px-4 py-2 transition-all hover:scale-105"
+              >
+                <Icon name="Phone" size={14} className="text-[#D4AF37]" />
+                +7 (924) 246-71-20
+              </a>
+              <button onClick={() => handleNav("form")} className="bg-[#D4AF37] hover:bg-[#c49e2e] text-[#1A3C34] font-semibold text-sm px-5 py-2.5 transition-all hover:scale-105">
+                Перезвоните мне
+              </button>
+            </div>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white ml-auto">
+              <Icon name={menuOpen ? "X" : "Menu"} size={24} />
             </button>
           </div>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white">
-            <Icon name={menuOpen ? "X" : "Menu"} size={24} />
-          </button>
         </div>
       </nav>
 
