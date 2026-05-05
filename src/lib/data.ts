@@ -118,7 +118,7 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     title: "Дом в лесу с панорамным остеклением",
     image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/6fa11a2b-bc41-483b-962b-345025394375.png",
     description: "Одноэтажный дом 90 кв.м. с большой деревянной террасой и панорамным остеклением. Скандинавский стиль, металлическая кровля, утеплённые стены из бруса.",
-    time: "15 дней",
+    time: "2 месяца",
     location: "Приморский край",
   },
   {
@@ -127,7 +127,7 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     title: "Дом в пригороде Владивостока",
     image: "https://cdn.poehali.dev/projects/6cec83f6-886a-402c-8698-2003e58f639f/bucket/7028ad06-ef7a-4a81-ae53-a6adc8b5aa55.png",
     description: "Проект 120 кв.м. для постоянного проживания семьи из 4 человек. Высокие потолки, панорамное остекление, отделка «под ключ».",
-    time: "18 дней",
+    time: "55 дней",
     location: "Артем",
   },
   {
@@ -136,7 +136,7 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     title: "Одноэтажный дом для молодой семьи",
     image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     description: "Компактный проект 85 кв.м. с двумя спальнями и просторной кухней-гостиной. Тёплый пол, отделка под ключ. Идеально для начала семейной жизни.",
-    time: "14 дней",
+    time: "30 дней",
     location: "Владивосток",
   },
   {
@@ -154,7 +154,7 @@ export const PORTFOLIO: { tab: string; label: string; title: string; image: stri
     title: "Дом с террасой на берегу залива",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     description: "Проект 110 кв.м. с панорамной террасой 20 кв.м. Усиленное утепление для морского климата, большие окна с видом на залив.",
-    time: "20 дней",
+    time: "35 дней",
     location: "Находка",
   },
   {
