@@ -1,63 +1,8 @@
-import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 import { HERO_BG } from "@/lib/data";
 
 interface HeroSectionProps {
   scrollTo: (id: string) => void;
-}
-
-const MATRIX_CHARS = "アイウエオカキクケコサシスセソタチツテトナニヌネノ01";
-
-function MatrixText({ text, className }: { text: string; className?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const original = text;
-    let frame = 0;
-    let raf: number;
-    let started = false;
-    const startDelay = parseInt(el.dataset.delay || "0");
-
-    const scramble = () => {
-      frame++;
-      if (frame < startDelay) {
-        raf = requestAnimationFrame(scramble);
-        return;
-      }
-      if (!started) started = true;
-
-      const progress = Math.min((frame - startDelay) / 2.2, original.length);
-      const revealed = Math.floor(progress);
-
-      el.textContent = original
-        .split("")
-        .map((char, i) => {
-          if (char === " " || char === "—" || char === ",") return char;
-          if (i < revealed) return char;
-          if (i === revealed) return MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
-          return MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
-        })
-        .join("");
-
-      if (revealed < original.length) {
-        raf = requestAnimationFrame(scramble);
-      } else {
-        el.textContent = original;
-      }
-    };
-
-    raf = requestAnimationFrame(scramble);
-    return () => cancelAnimationFrame(raf);
-  }, [text]);
-
-  return (
-    <span ref={ref} className={className}>
-      {text}
-    </span>
-  );
 }
 
 export default function HeroSection({ scrollTo }: HeroSectionProps) {
@@ -78,32 +23,13 @@ export default function HeroSection({ scrollTo }: HeroSectionProps) {
             Владивосток и Дальний Восток
           </div>
 
-          <h1 className="font-cormorant text-5xl md:text-7xl font-bold leading-[1.1] mb-6">
-            <span className="text-white block overflow-hidden">
-              <MatrixText
-                text="Дом вашей мечты —"
-                className="inline-block"
-              />
-            </span>
-            <em className="not-italic block overflow-hidden" style={{
+          <h1 className="font-cormorant text-5xl md:text-7xl font-bold leading-[1.1] text-white mb-6">
+            Дом вашей мечты —<br />
+            <em className="not-italic" style={{
               color: "#D4AF37",
               textShadow: "0 0 8px rgba(212,175,55,0.7), 0 0 24px rgba(212,175,55,0.4), 0 0 60px rgba(212,175,55,0.2)",
-            }}>
-              <span
-                ref={(el) => { if (el) el.dataset.delay = "30"; }}
-              >
-                <MatrixText
-                  text="за понятные деньги,"
-                  className="inline-block"
-                />
-              </span>
-            </em>
-            <span className="text-white block overflow-hidden">
-              <MatrixText
-                text="в понятные сроки"
-                className="inline-block"
-              />
-            </span>
+            }}>за понятные деньги,</em><br />
+            в понятные сроки
           </h1>
 
           <p className="text-white/65 text-lg leading-relaxed max-w-xl mb-10">
@@ -130,13 +56,6 @@ export default function HeroSection({ scrollTo }: HeroSectionProps) {
         <span>Листать</span>
         <Icon name="ChevronDown" size={16} className="animate-bounce" />
       </div>
-
-      <style>{`
-        @keyframes matrixFlicker {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.85; }
-        }
-      `}</style>
     </section>
   );
 }
