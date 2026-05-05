@@ -180,6 +180,76 @@ export default function Index() {
 
       <HeroSection scrollTo={scrollTo} />
 
+      {/* ── WHY US ── */}
+      <section id="whyus" className="relative overflow-hidden py-20" style={{ background: "linear-gradient(135deg, #0f2420 0%, #1A3C34 60%, #2C5E50 100%)" }}>
+        {/* Декор */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 60px, #D4AF37 60px, #D4AF37 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, #D4AF37 60px, #D4AF37 61px)" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 md:px-16 relative z-10">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-3 mb-3">
+              <div className="w-8 h-px bg-[#D4AF37]" />
+              <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase">Цифры говорят сами</span>
+              <div className="w-8 h-px bg-[#D4AF37]" />
+            </div>
+            <h2 className="font-cormorant text-4xl md:text-5xl font-bold text-white">
+              Почему выбирают <span className="text-[#D4AF37]" style={{ textShadow: "0 0 40px rgba(212,175,55,0.5)" }}>АРХИБРУС</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
+            {[
+              { num: "295", suffix: "+", label: "домов сдано", sub: "по всему Дальнему Востоку", icon: "🏠" },
+              { num: "30", suffix: " лет", label: "на рынке", sub: "с 1994 года", icon: "📅" },
+              { num: "100", suffix: "%", label: "клиентов рекомендуют", sub: "по данным опросов", icon: "⭐" },
+              { num: "6", suffix: " регионов", label: "Дальнего Востока", sub: "Приморье, Сахалин, Камчатка и др.", icon: "📍" },
+            ].map(({ num, suffix, label, sub, icon }) => (
+              <div key={label} className="relative group text-center">
+                {/* Карточка */}
+                <div className="relative rounded-2xl border border-[#D4AF37]/20 bg-white/5 backdrop-blur-sm p-6 md:p-8 hover:border-[#D4AF37]/60 hover:bg-white/10 transition-all duration-400 overflow-hidden">
+                  {/* Glow при ховере */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400" style={{ background: "radial-gradient(circle at center, rgba(212,175,55,0.08) 0%, transparent 70%)" }} />
+                  <div className="text-3xl mb-3">{icon}</div>
+                  <div className="relative mb-2">
+                    <span
+                      className="font-cormorant font-bold leading-none"
+                      style={{
+                        fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+                        color: "#D4AF37",
+                        textShadow: "0 0 30px rgba(212,175,55,0.6), 0 0 60px rgba(212,175,55,0.3)",
+                      }}
+                    >
+                      {num}
+                    </span>
+                    <span
+                      className="font-cormorant font-bold"
+                      style={{
+                        fontSize: "clamp(1.4rem, 3vw, 2.2rem)",
+                        color: "#D4AF37",
+                        textShadow: "0 0 20px rgba(212,175,55,0.5)",
+                      }}
+                    >
+                      {suffix}
+                    </span>
+                  </div>
+                  <div className="text-white font-semibold text-sm md:text-base leading-snug mb-1">{label}</div>
+                  <div className="text-white/40 text-xs">{sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <p className="text-white/30 text-sm">
+              Мы не новички — за каждой цифрой стоят реальные семьи, которые живут в наших домах
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURES ── */}
       <section id="features" className="py-28 bg-[#1A3C34]">
         <div className="max-w-7xl mx-auto px-6 md:px-16">
