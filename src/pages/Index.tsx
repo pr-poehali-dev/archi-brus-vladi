@@ -196,7 +196,7 @@ export default function Index() {
               <div className="w-8 h-px bg-[#D4AF37]" />
             </div>
             <h2 className="font-cormorant text-4xl md:text-5xl font-bold text-white">
-              Почему выбирают <span style={{ color: "#00e5cc", textShadow: "0 0 6px #00e5cc, 0 0 16px #00e5cc, 0 0 50px rgba(0,229,204,.5)" }}>АРХИБРУС</span>
+              Почему выбирают <span style={{ color: "#D4AF37", textShadow: "0 0 6px #D4AF37, 0 0 16px #D4AF37, 0 0 50px rgba(212,175,55,.5)" }}>АРХИБРУС</span>
             </h2>
           </div>
 
